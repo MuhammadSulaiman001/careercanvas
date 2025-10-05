@@ -55,11 +55,9 @@ SECURITY NOTE:
       // }
       const configElement2 = document.getElementById('pexels-config2');
       window.PEXELS_API_KEY = configElement2 ? JSON.parse(configElement2.getAttribute('data-params')) : {};
-      console.log("PEXELS_API_KEY", window.PEXELS_API_KEY);
 
       const configElement3 = document.getElementById('formspree-config');
       window.FORMSPREE_ENDPOINT = configElement3 ? JSON.parse(configElement3.getAttribute('data-params')) : {};
-      console.log("FORMSPREE_ENDPOINT", window.FORMSPREE_ENDPOINT);
 
     } catch (error) {
       console.warn('Error loading configuration:', error);
