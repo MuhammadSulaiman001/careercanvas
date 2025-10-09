@@ -19,6 +19,9 @@ class PexelsBackground {
             if (window.PEXELS_API_KEY) {
                 this.apiKey = window.PEXELS_API_KEY;
                 this.init();
+            } else if (window.PEXELS_SPECIFIC_IMAGES) {
+                this.imageBatch = window.PEXELS_SPECIFIC_IMAGES;
+                this.init();
             } else {
                 setTimeout(checkConfig, 100);
             }
@@ -60,6 +63,13 @@ class PexelsBackground {
     }
 
     async loadRandomBackground() {
+
+        if (this.imageBatch.length > 0) {
+            this.currentIndex = 0;
+            this.startBackgroundRotation();
+            return;
+        }
+
         const randomQuery = this.queries[Math.floor(Math.random() * this.queries.length)];
 
         const response = await fetch(`https://api.pexels.com/v1/search?query=${randomQuery}&orientation=landscape&size=small&per_page=15&page=1`, {
@@ -88,11 +98,11 @@ class PexelsBackground {
         // Clear previous interval if any
         if (this.rotationInterval) clearInterval(this.rotationInterval);
 
-        // Rotate images every 3 seconds
+        // Rotate images every 12 seconds
         this.rotationInterval = setInterval(() => {
             this.currentIndex = (this.currentIndex + 1) % this.imageBatch.length;
             this.applyBackgroundImage(this.imageBatch[this.currentIndex]);
-        }, 4000);
+        }, 12000);
     }
 
     applyBackgroundImage(imageUrl) {
